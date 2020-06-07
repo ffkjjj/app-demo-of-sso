@@ -2,6 +2,7 @@ package cf.zhul.appdemoforcas.filter;
 
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.ssl.IgnoreSSLValidateFilter;
+import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.servlet.Filter;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
@@ -158,6 +161,16 @@ public class FilterConfig implements Serializable, InitializingBean {
         return characterEncodingFilter;
     }
 
+    @Bean
+    public FilterRegistrationBean casHttpServletRequestWrapperFilter(){
+        FilterRegistrationBean authenticationFilter = new FilterRegistrationBean();
+        authenticationFilter.setFilter(new HttpServletRequestWrapperFilter());
+        authenticationFilter.setOrder(6);
+        List<String> urlPatterns = new ArrayList<>();
+        urlPatterns.add("/*");
+        authenticationFilter.setUrlPatterns(urlPatterns);
+        return authenticationFilter;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

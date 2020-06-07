@@ -97,15 +97,17 @@ export default {
       var _this = this
       axios.get('http://localhost:8888/api/hello/get', {headers: {'x-requested-with': 'XMLHttpRequest'}})
       .then(function (response) {
-        _this.msg = response.data
         if(response.data.code === 202){
-          window.location.href = "http://localhost:8888/api/checkTicket"
-        }
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            window.location.href = "http://localhost:8888/api/checkTicket"
+          } else if (response.data.code == 200){
+            _this.msg = response.data.name
+          }
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
     }
 }
 </script>

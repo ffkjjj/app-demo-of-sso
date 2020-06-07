@@ -12,4 +12,8 @@ public class Result<T> {
     private int code = 200;
     private String msg = "success";
     private T data;
+
+    public Result(T data) {
+        this.data = data;
+    }
 }
